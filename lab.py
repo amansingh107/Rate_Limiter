@@ -25,13 +25,23 @@ def run_test(algo_file):
     
     time.sleep(5) # Warm up
     
-    # 3. Run k6 and export results to JSON
+    # 3. Run k6 and capture output for debugging
     print(f"   📊 Stress testing...")
-    subprocess.run([
+    process = subprocess.run([
         "k6", "run", 
         "--summary-export=temp_result.json", 
         "tests/burst-test.js"
-    ], capture_output=True)
+    ], capture_output=True, text=True)
+
+    # Check if k6 actually worked
+    if process.returncode != 0:
+        print(f"❌ k6 failed! Error: {process.stderr}")
+        return # Skip to the next algorithm
+
+    # Check if the file exists and is not empty
+    if not os.path.exists("temp_result.json") or os.path.getsize("temp_result.json") == 0:
+        print("❌ temp_result.json was not created or is empty.")
+        return
     
     # 4. Parse the JSON result
     with open("temp_result.json") as f:
