@@ -1,3 +1,9 @@
+
+const express = require('express');
+const Redis = require('ioredis');
+const app = express();
+const redis = new Redis({ host: 'redis' });
+
 const SCRIPT = `
   local capacity = 10
   local refill_rate = 0.2 -- tokens per second

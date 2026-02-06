@@ -1,3 +1,9 @@
+
+const express = require('express');
+const Redis = require('ioredis');
+const app = express();
+const redis = new Redis({ host: 'redis' });
+
 const SCRIPT = `
   local now = tonumber(ARGV[1])
   local window = 60000 -- 1 minute in ms

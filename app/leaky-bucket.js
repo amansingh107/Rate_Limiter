@@ -1,3 +1,8 @@
+const express = require('express');
+const Redis = require('ioredis');
+const app = express();
+const redis = new Redis({ host: 'redis' });
+
 const SCRIPT = `
   local leak_rate = 2 -- seconds per request
   local capacity = 5
