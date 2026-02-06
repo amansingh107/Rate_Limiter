@@ -3,4 +3,4 @@ WORKDIR /app
 COPY package*.json ./
 RUN npm install express ioredis
 COPY . .
-CMD ["node", "index.js"]
+CMD ["node", "fixed-window.js"]
